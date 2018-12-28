@@ -1,0 +1,58 @@
+﻿@model WA2.Models.StudentViewModel
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+
+<div class="col-lg-10" id="CreateStudent">
+    <div asp-validation-summary="All" class="text-danger" id="validationSummary"></div>
+    <form id="frmCreateStudent">
+        <label asp-for="Name" class="col-3">Name</label>
+        <input asp-for="Name" class="col-7" />
+
+        <label asp-for="LastName" class="col-3">Last name</label>
+        <input asp-for="LastName" class="col-7" />
+
+        <label asp-for="EnrollmentYear" class="col-3">EnrollmentYear</label>
+        <input asp-for="EnrollmentYear" class="col-7" />
+
+        <label asp-for="EnrollmentNum" class="col-3">EnrollmentNum</label>
+        <input asp-for="EnrollmentNum" class="col-7" />
+
+        <label asp-for="CityId" class="col-3">City</label>
+        <select asp-for="CityId" asp-items="@(new SelectList(Model.Cities,"Id","Name"))" class="col-7"></select>
+
+        <button id="submit1">Sacuvaj</button>
+
+    </form>
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#submit1').click(function (e) {
+            e.preventDefault();
+            var url = "@Url.Action("Create", "Student")";
+            var data = $('form').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: function (result) {
+                    $("#CreateStudent").html(result);
+
+                },
+                error: function (validation) {
+                    var obj = jQuery.parseJSON(validation.responseText);
+                    $.each(obj, function (key, value) {
+                        $.each(value, function (index, value) {
+                            $('#validationSummary').append(value+"</br>")
+                        })
+                    })
+                }
+            });
+        });
+    });
+</script>

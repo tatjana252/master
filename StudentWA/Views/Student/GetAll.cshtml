@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WA2.Models.StudentViewModel>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Enrollment Num/Year</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">City</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.EnrollmentNum/@s.EnrollmentYear</td>
+                    <td>@s.Name</td>
+                    <td>@s.LastName</td>
+                    @if (s.City != null)
+                    {
+                        <td>@s.City.Name</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
